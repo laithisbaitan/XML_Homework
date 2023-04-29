@@ -1,15 +1,60 @@
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+import java.io.*;
+
 public class Main {
     public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        extract_xml();
+    }
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+    private static void extract_xml() {
+        try {
+            File inputFile = new File("src\\input2.txt");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(inputFile);
+            doc.getDocumentElement().normalize();
+            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+            NodeList nList = doc.getElementsByTagName("book");
+            System.out.println("----------------------------");
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+                Node nNode = nList.item(temp);
+                System.out.println("\nCurrent Element :" + nNode.getNodeName());
+
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+                    System.out.println("Book id : "
+                            + eElement.getAttribute("id"));
+                    System.out.println("Title : "
+                            + eElement
+                            .getElementsByTagName("author")
+                            .item(0)
+                            .getTextContent());
+                    System.out.println("Genre : "
+                            + eElement
+                            .getElementsByTagName("genre")
+                            .item(0)
+                            .getTextContent());
+                    System.out.println("Price : "
+                            + eElement
+                            .getElementsByTagName("price")
+                            .item(0)
+                            .getTextContent());
+                    System.out.println("Publish Date : "
+                            + eElement
+                            .getElementsByTagName("publish_date")
+                            .item(0)
+                            .getTextContent());
+                    System.out.println("Description : "
+                            + eElement
+                            .getElementsByTagName("description")
+                            .item(0)
+                            .getTextContent());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
