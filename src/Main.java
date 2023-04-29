@@ -7,9 +7,10 @@ public class Main {
         extract_xml();
     }
 
+
     private static void extract_xml() {
         try {
-            File inputFile = new File("src\\input2.txt");
+            File inputFile = new File("src\\input.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputFile);
@@ -18,41 +19,48 @@ public class Main {
             NodeList nList = doc.getElementsByTagName("book");
             System.out.println("----------------------------");
 
-            for (int temp = 0; temp < nList.getLength(); temp++) {
-                Node nNode = nList.item(temp);
-                System.out.println("\nCurrent Element :" + nNode.getNodeName());
-
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element) nNode;
-                    System.out.println("Book id : "
-                            + eElement.getAttribute("id"));
-                    System.out.println("Title : "
-                            + eElement
-                            .getElementsByTagName("author")
-                            .item(0)
-                            .getTextContent());
-                    System.out.println("Genre : "
-                            + eElement
-                            .getElementsByTagName("genre")
-                            .item(0)
-                            .getTextContent());
-                    System.out.println("Price : "
-                            + eElement
-                            .getElementsByTagName("price")
-                            .item(0)
-                            .getTextContent());
-                    System.out.println("Publish Date : "
-                            + eElement
-                            .getElementsByTagName("publish_date")
-                            .item(0)
-                            .getTextContent());
-                    System.out.println("Description : "
-                            + eElement
-                            .getElementsByTagName("description")
-                            .item(0)
-                            .getTextContent());
+            for (int i = 0; i < nList.getLength(); i++) {
+                Node node = nList.item(i);
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    System.out.println(node.getNodeName() + " : " + node.getTextContent());
                 }
             }
+
+//            for (int temp = 0; temp < nList.getLength(); temp++) {
+//                Node nNode = nList.item(temp);
+//                System.out.println("\nCurrent Element :" + nNode.getNodeName());
+//
+//                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+//                    Element eElement = (Element) nNode;
+//                    System.out.println("Book id : "
+//                            + eElement.getAttribute("id"));
+//                    System.out.println("Title : "
+//                            + eElement
+//                            .getElementsByTagName("author")
+//                            .item(0)
+//                            .getTextContent());
+//                    System.out.println("Genre : "
+//                            + eElement
+//                            .getElementsByTagName("genre")
+//                            .item(0)
+//                            .getTextContent());
+//                    System.out.println("Price : "
+//                            + eElement
+//                            .getElementsByTagName("price")
+//                            .item(0)
+//                            .getTextContent());
+//                    System.out.println("Publish Date : "
+//                            + eElement
+//                            .getElementsByTagName("publish_date")
+//                            .item(0)
+//                            .getTextContent());
+//                    System.out.println("Description : "
+//                            + eElement
+//                            .getElementsByTagName("description")
+//                            .item(0)
+//                            .getTextContent());
+//                }
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
